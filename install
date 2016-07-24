@@ -1,0 +1,40 @@
+#!/bin/bash
+
+PLATFORM=$(uname -s)
+CWD=$(dirname ${BASH_SOURCE[0]})
+
+function abs_path() 
+{
+    cd $1; pwd; cd - >/dev/null
+}
+
+source $CWD/arch/common.bash
+
+case $PLATFORM in
+    "Darwin")
+        source $CWD/arch/darwin.bash
+        ;;
+
+    "Linux")
+        if [ "$(os_name)" = "centos" ]; then
+            source $CWD/arch/centos.bash
+        elif [ "$(os_name)" = "ubuntu" ] || [ "$(os_name)" = "Ubuntu" ]; then
+            source $CWD/arch/ubuntu.bash
+        else
+            echo "Unsupport Linux version $(os_name)"
+            exit 1
+        fi
+        ;;
+
+    *)
+        echo "Unsupport PLATFORM -> $PLATFORM"
+        exit 1
+        ;;
+esac
+
+install_git
+install_moreutils
+install_ag
+install_fzf
+update_bashrc
+update_vimrc
