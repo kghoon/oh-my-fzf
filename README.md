@@ -6,8 +6,8 @@ and to setup related settings.
 
 Requirements
 ------------
-- OS -- OSX and Ubuntu >= 12.04, CentOS7
-- Shell -- bash (zsh not supported yet)
+- OS - OSX and Ubuntu >= 12.04, CentOS7
+- Shell - bash (zsh not supported yet)
 
 Install
 -------
@@ -19,21 +19,21 @@ $ ~/.oh-my-fzf/install
 
 Bash - Commands
 ---------------
-- fe -- Open the selected file with default editor
-- fo -- Open the selected file with open command or ```$EDITOR```
-- fd -- cd to selected directory
+- fe - Open the selected file with default editor
+- fo - Open the selected file with open command or ```$EDITOR```
+- fd - cd to selected directory
 - fda - ```fd``` including hidden directory
-- fdr --  cd to  selected parent directory
-- cdf -- cd into the directory of the selected file
-- to -- bookmark current directory with keyword
-- Ag -- Seach contents using silver searcher and open the file 
+- fdr -  cd to  selected parent directory
+- cdf - cd into the directory of the selected file
+- to - bookmark current directory with keyword
+- Ag - Seach contents using silver searcher and open the file 
 
 
 Vim - Commands and shortcuts
 ----------------------------
-- Tags -- Move to selected tag
-- Ag ```\ + g``` -- Search contents using ag and move to selected line.
-- ```\ + r``` -- Open recently used file list and open selected file.
+- Tags - Move to selected tag
+- Ag ```\ + g``` - Search contents using ag and move to selected line.
+- ```\ + r``` - Open recently used file list and open selected file.
 
 
 License
