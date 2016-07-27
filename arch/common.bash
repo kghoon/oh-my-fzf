@@ -37,10 +37,10 @@ function update_vimrc() {
 
     abspath=$(abs-path $CWD)
 
-    [ -z "$(grep '\.fzf' ~/.vimrc )" ] && cat >> ~/.vimrc <<EOF
+    [ -z "$(grep '\.fzf' ~/.vimrc 2>/dev/null)" ] && cat >> ~/.vimrc <<EOF
 set rtp+=~/.fzf
 EOF
-    [ -z "$(grep $abspath ~/.vimrc)" ] && cat >> ~/.vimrc <<EOF
+    [ -z "$(grep $abspath ~/.vimrc 2>/dev/null)" ] && cat >> ~/.vimrc <<EOF
 set rtp+=$abspath
 EOF
 }
