@@ -1,15 +1,17 @@
 
-ta() {
-    session=$(tmux list-sessions -F "#{session_name}" | \
-        fzf --query="$1" --select-1 --exit-0) &&
-        tmux attach -t "$session"
-}
-
 fs() {
     local session
+
     session=$(tmux list-sessions -F "#{session_name}" | \
-        fzf --query="$1" --select-1 --exit-0) &&
-        tmux switch-client -t "$session"
+        fzf --query="$1" --select-1 --exit-0)
+
+    if [ ! -z "$session" ]; then
+        if [ ! -z "$TMUX" ]; then
+            tmux switch-client -t "$session"
+        else
+            tmux attach -t "$session"
+        fi
+    fi
 }
 
 # ftpane - switch pane (@george-b)
