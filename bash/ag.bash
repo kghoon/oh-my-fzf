@@ -10,7 +10,7 @@ Ag() {
         return
     fi
 
-    local result=$(ag --nogroup --column "$*" | ifne fzf --query="$*")
+    local result=$(ag --cc --cpp --java --xml --make --nogroup --column "$*" | ifne fzf --query="$*")
     if [ ! -z "$result" ]; then
 
         if [[ $result =~ ([^:]+):([0-9]+):([0-9]+):.+ ]]; then
