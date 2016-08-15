@@ -1,7 +1,7 @@
 oh-my-fzf
 =========
 
-Provide convinient way to install [fuzzy-finder](https://github.com/junegunn/fzf.git)
+Provide convenient way to install [fuzzy-finder](https://github.com/junegunn/fzf.git)
 and to setup related settings.
 
 Requirements
