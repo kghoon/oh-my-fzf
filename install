@@ -1,12 +1,11 @@
 #!/bin/bash
 
+#
+# Internal Variables
+#
 PLATFORM=$(uname -s)
 CWD=$(dirname ${BASH_SOURCE[0]})
-
-function abs_path() 
-{
-    cd $1; pwd; cd - >/dev/null
-}
+OPTION_VERBOSE=0
 
 source $CWD/arch/common.bash
 
@@ -32,9 +31,22 @@ case $PLATFORM in
         ;;
 esac
 
-install_git
-install_moreutils
-install_ag
-install_fzf
-update_bashrc
-update_vimrc
+for opt in "$@"; do
+    case $opt in
+        --d) OPTION_VERBOSE=1 ;;
+        --help|*)
+            _usage
+            exit 0
+             ;;
+    esac
+done
+
+_banner hi
+_progress install_git git
+_progress install_moreutils utils
+_progress install_ag ag
+_progress install_fzf fzf
+_progress update_bashrc bash
+_progress update_vimrc vim
+_progress update_tmux tmux
+_banner bye

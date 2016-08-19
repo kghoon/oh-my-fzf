@@ -18,23 +18,20 @@ function update_bashrc()
 {
     abspath=$(abs-path $CWD)
 
-cat > ~/.oh-my-fzf.bash  <<EOF
-
+    cat > ~/.oh-my-fzf.bash  <<EOF
 CWD=$abspath
-
 for script_file in \$(ls \$CWD/bash/*.bash 2>/dev/null); do
     . \$script_file
 done
-
 EOF
 
-[ -z "$(grep 'oh-my-fzf.bash' ~/.bashrc)" ] && cat >> ~/.bashrc <<EOF
+    [ -z "$(grep 'oh-my-fzf.bash' ~/.bashrc)" ] && cat >> ~/.bashrc <<EOF
 [ -f ~/.oh-my-fzf.bash ] && . ~/.oh-my-fzf.bash
 EOF
 }
 
-function update_vimrc() {
-
+function update_vimrc()
+{
     abspath=$(abs-path $CWD)
 
     [ -z "$(grep '\.fzf' ~/.vimrc 2>/dev/null)" ] && cat >> ~/.vimrc <<EOF
@@ -43,6 +40,17 @@ EOF
     [ -z "$(grep $abspath ~/.vimrc 2>/dev/null)" ] && cat >> ~/.vimrc <<EOF
 set rtp+=$abspath
 EOF
+}
+
+function update_tmux()
+{
+    abspath=$(abs-path $CWD)
+
+    if [ "$PLATFORM" == "Darwin" ]; then
+        cp $abspath/plugin/tmux.conf ~/.tmux.conf
+    else
+        tmux source-file $abspath/plugin/tmux.conf
+    fi
 }
 
 function os_name()
@@ -67,4 +75,60 @@ function os_version()
     fi
 }
 
+function _usage()
+{
+    cat << EOF
+usage: $0 [OPTIONS]
+   --d          Verbose
+   --help       Show this message
+EOF
+}
 
+function _banner()
+{
+    case $1 in
+        "hi")
+            cat << EOF
+   ___           _        _ _  
+  |_ _|_ __  ___| |_ __ _| | |  $PLATFORM
+   | || '_ \/ __| __/ _v | | |  $(abs-path $CWD)
+   | || | | \__ \ || (_| | | |
+  |___|_| |_|___/\__\__,_|_|_|
+
+EOF
+            ;;
+        "bye")
+            cat << EOF
+
+ Good Bye!
+
+EOF
+            #sleep .5
+            #kill -9 $PPID
+            ;;
+    esac
+}
+
+function _progress()
+{
+    func=$1
+    name=$2
+    spin='-\|/'
+    i=0
+
+    if [ $OPTION_VERBOSE -gt 0 -o "$name" == "vim"  ]; then
+        $func &
+    else 
+        $func 1>/dev/null 2>&1 &
+    fi
+    pid=$!
+
+    while kill -0 $pid 2>/dev/null
+    do
+        i=$(((i+1)%4))
+        printf "\r[${spin:$i:1}] Update $2"
+        sleep .1
+    done
+
+    echo " "
+} 
