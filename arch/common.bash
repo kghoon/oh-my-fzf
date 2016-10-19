@@ -59,6 +59,8 @@ function os_name()
         cat /etc/os-release | egrep "^ID=" | sed "s/ID=//g"
     elif [ -f /etc/lsb-release ]; then
         cat /etc/lsb-release | egrep "^DISTRIB_ID=" | sed "s/DISTRIB_ID=//g"
+    elif [ -f /etc/centos-release ]; then
+        cat /etc/centos-release | awk '{print $1}' | tr "[:upper:]" "[:lower:]"
     else
         echo "unknown"
     fi
