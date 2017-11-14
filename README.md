@@ -6,7 +6,7 @@ and to setup related settings.
 
 Requirements
 ------------
-- OS - OSX and Ubuntu >= 12.04, CentOS7
+- OS - OSX and Ubuntu >= 14.04, CentOS7
 - Shell - bash (zsh not supported yet)
 
 Install
