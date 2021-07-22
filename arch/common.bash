@@ -25,7 +25,7 @@ for script_file in \$(ls \$CWD/bash/*.bash 2>/dev/null); do
 done
 EOF
 
-    [ -z "$(grep 'oh-my-fzf.bash' ~/.bashrc)" ] && cat >> ~/.bashrc <<EOF
+    [ -z "$(grep 'oh-my-fzf.bash' ~/.zshrc)" ] && cat >> ~/.zshrc <<EOF
 [ -f ~/.oh-my-fzf.bash ] && . ~/.oh-my-fzf.bash
 EOF
 }

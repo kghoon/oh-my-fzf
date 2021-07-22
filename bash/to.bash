@@ -5,7 +5,7 @@
 LINKHOME=$HOME/.bookmarks
 [ -e $LINKHOME ] || mkdir -p $LINKHOME
 
-to() {
+function to() {
     if [ -z $1 ]; then
         if [ "$(which fzf-tmux)" != "" ]; then
             _to_using_fzf
@@ -45,7 +45,7 @@ to() {
     fi
 }
 
-_to_using_fzf() {
+function _to_using_fzf() {
     local dest=$(ls $LINKHOME | while read name; do printf "%20s => %s\n" $name $(cat $LINKHOME/$name); done | fzf-tmux)
     if [ ! -z "$dest" ]; then
         dest="$(echo $dest | awk '{print$1}')"
@@ -53,7 +53,7 @@ _to_using_fzf() {
     fi
 }
 
-_to_usage() {
+function _to_usage() {
     echo ""
     echo "Directory bookmark utility"
     echo ""
@@ -63,9 +63,4 @@ _to_usage() {
     echo ""
 }
 
-_to_complete()
-{
-    COMPREPLY=( $(compgen -W "$(ls $LINKHOME)" -- "${COMP_WORDS[COMP_CWORD]}") )
-}
-complete -F _to_complete to
 

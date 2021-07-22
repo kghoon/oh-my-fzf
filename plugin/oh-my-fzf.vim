@@ -4,6 +4,7 @@
 " shortcut: \ + s
 "
 nnoremap <silent> <Leader>s :call fzf#run({
+\    'source': 'find . -type d -name "node_modules" -prune -o -type f -print',
 \    'down': '40%',
 \    'sink': 'e' })<CR>
 
@@ -62,7 +63,7 @@ function! s:ag_handler(lines)
 endfunction
 
 command! -nargs=* Ag call fzf#run({
-\ 'source':  printf('ag --js --json --html --cc --cpp --java --xml --make --nogroup --column --color "%s"',
+\ 'source':  printf('ag --ignore-dir node_modules --nogroup --column --color "%s"',
 \                   escape(empty(<q-args>) ? '^(?=.)' : <q-args>, '"\')),
 \ 'sink*':    function('<sid>ag_handler'),
 \ 'options': '--ansi --expect=ctrl-t,ctrl-v,ctrl-x --delimiter : --nth 4.. '.

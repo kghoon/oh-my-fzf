@@ -1,23 +1,12 @@
-# Ag - Search contents using silver searcher and open editor
+# fuzzy grep open via ag with line number
 Ag() {
-    if [ -z "$(which ifne)" ]; then
-        echo "Error: 'ifne' required. Install moreutils"
-        return
-    fi
+  local file
+  local line
 
-    if [ -z "$(which ag)" ]; then
-        echo "Error: 'ag' required. Install silver_searcher"
-        return
-    fi
+  read -r file line <<<"$(ag --ignore-dir node_modules --nobreak --noheading $@ | fzf -0 -1 | awk -F: '{print $1, $2}')"
 
-    local result=$(ag --json --js --html --cc --cpp --java --xml --make --nogroup --column "$*" | ifne fzf --query="$*")
-    if [ ! -z "$result" ]; then
-
-        if [[ $result =~ ([^:]+):([0-9]+):([0-9]+):.+ ]]; then
-            local filename="${BASH_REMATCH[1]}"
-            local lineno="${BASH_REMATCH[2]}"
-
-            vim +$lineno $filename
-        fi
-    fi
+  if [[ -n $file ]]
+  then
+     vim $file +$line
+  fi
 }
